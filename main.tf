@@ -6,7 +6,15 @@ terraform {
       version = "=2.46.0"
     }
   }
+  
+ backend "azurerm" {
+    resource_group_name   = "JMTerraform-state"
+    storage_account_name  = "jamiemoxontfstate"
+    container_name        = "tstate"
+    key                   = "terraform.tfstate"
+    }
 }
+
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
@@ -16,7 +24,7 @@ provider "azurerm" {
 # Create a resource group
 resource "azurerm_resource_group" "Main-RG" {
   name     = "Main-RG"
-  location = "UK South"
+  location = var.primary_location
 }
 
 # Create a virtual network within the resource group
